@@ -86,17 +86,16 @@ input:checked+label {
 }
 
 button {
-    color: white;
-    background-color: rgba(67, 86, 78, 0.95);
     padding: 1rem;
     border-radius: 2px;
     font-size: 0.9rem;
     border: 0;
     outline: none;
     margin-top: 1.5rem;
+    color: white;
+    background-color: rgba(67, 86, 78, 0.9);
 }
-
 button:active {
-    background-color: rgba(67, 86, 78, 1);
     outline: none;
+    background-color: rgba(67, 86, 78, 1);
 }

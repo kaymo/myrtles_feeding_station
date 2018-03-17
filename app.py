@@ -1,9 +1,9 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 app = Flask(__name__)
 
 
 @app.route('/')
-def main():
+def index():
     # Get today's feedings
     portions = [
         { 'time': '07:50', 'quantity': '2', 'flavour': 'Fish' },
@@ -16,15 +16,21 @@ def main():
     
     return render_template('main.html', portions=portions, today=today)
     
-@app.route('/food-portions', methods=['POST', 'DELETE'])
+
+@app.route('/food-portions', methods=['POST'])
 def food_portions():
     if request.method == 'POST':
-        portion = request.form[portion_size]
+        quantity = request.form['quantity']
+        flavour = request.form['flavour']
         # Add portion to DB
-        flash('Myrtle\'s been fed!')
-    elif request.method == 'DELETE':
+    return redirect(url_for('index'))
+    
+
+@app.route('/undo', methods=['POST'])
+def undo():
+    if request.method == 'DELETE':
         # remove last DB entry
-        flash('Fat-fingered fuck.')
+        fsdf = 1
     return redirect(url_for('index'))
 
     

@@ -34,10 +34,13 @@
                         {% endfor %}
                     </div>
                 </div>
+                <form action="/undo" method="post">
+                    <button>Undo</button>
+                </form>
             </div>
             <div class="now">
                 <h2>Now</h2>
-                <form>
+                <form action="/food-portions" method="post">
                     <div class="now--flavour">
                         <input type="radio" name="flavour" value="chicken" id="flavour-chicken" /><label for="flavour-chicken">Chicken</label>
                         <input type="radio" name="flavour" value="fish" id="flavour-fish" /><label for="flavour-fish">Fish</label>
