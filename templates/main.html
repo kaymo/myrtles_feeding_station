@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div id="main">
+        <h1>Myrtle Wants Food</h1>
+        <div class="columns">
+            <div class="today">
+                <h2>Today</h2>
+                <div class="today--flavour-breakdown">
+                    <div class="today--flavour">
+                        <h3>Total</h3>
+                        <p>Chicken</p>
+                        <p>Fish</p>
+                    </div>
+                    <div class="today--quantity">
+                        <h3>{{ today['total'] | safe }}</h3>
+                        <p>{{ today['chicken'] | safe }}</p>
+                        <p>{{ today['fish'] | safe }}</p>
+                    </div>
+                </div>
+                <div class="today--portions">
+                    <div class="today--portions-time">
+                        {% for portion in portions %}
+                          <p>{{ portion['time'] }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="today--portions-flavour">
+                        {% for portion in portions %}
+                          <p>{{ portion['flavour'] }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="today--portions-quantity">
+                        {% for portion in portions %}
+                          <p>{{ portion['quantity'] | safe }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="now">
+                <h2>Now</h2>
+                <form>
+                    <div class="now--flavour">
+                        <input type="radio" name="flavour" value="chicken" id="flavour-chicken" /><label for="flavour-chicken">Chicken</label>
+                        <input type="radio" name="flavour" value="fish" id="flavour-fish" /><label for="flavour-fish">Fish</label>
+                    </div>
+                    <div class="now--quantity">
+                        <input type="radio" name="quantity" value="1" id="quantity-1" /><label for="quantity-1">&frac13;</label>
+                        <input type="radio" name="quantity" value="2" id="quantity-2" /><label for="quantity-2">&frac23;</label>
+                        <input type="radio" name="quantity" value="3" id="quantity-3" /><label for="quantity-3">1</label>
+                        <input type="radio" name="quantity" value="6" id="quantity-6" /><label for="quantity-6">2</label>
+                    </div>
+                    <button>I'm Feeding Myrtle!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
