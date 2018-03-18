@@ -57,6 +57,8 @@ h2 {
     display: flex;
     text-align: left;
     justify-content: space-between;
+    font-size: 0.85rem;
+    line-height: 0.85rem;
 }
 
 .now--flavour, .now--quantity {
@@ -71,6 +73,7 @@ label {
     display: inline-block;
     padding: 1rem;
     border-radius: 2px;
+    font-size: 1.1rem;
 }
 
 input:checked+label {
