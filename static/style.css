@@ -26,10 +26,12 @@ h2 {
 }
 
 .columns {
+    display: -webkit-flex;
     display: flex;
 }
 
 .today {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,6 +52,7 @@ h2 {
 
 .today--flavour-breakdown .columns { 
     justify-content: space-evenly;
+    -webkit-justify-content: space-around;
 }
 
 .today--flavour-breakdown .columns p {
@@ -60,6 +63,7 @@ h2 {
     width: 12rem;
     display: flex;
     text-align: left;
+    -webkit-justify-content: space-between;
     justify-content: space-between;
     font-size: 0.85rem;
     line-height: 0.85rem;

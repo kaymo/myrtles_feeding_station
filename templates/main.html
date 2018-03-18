@@ -5,10 +5,10 @@
             <div class="today">
                 <h2>Today</h2>
                 <div class="today--flavour-breakdown">
-                    <h3>Total: {{ today['total'] | safe }}</h3>
+                    <h3>Total – {{ today['total'] | safe }}</h3>
                     <div class="columns">
-                        <p class="{{ 'bold' if today['chicken'] < today['fish']}}">Chicken: {{ today['chicken'] | safe }}</p>
-                        <p class="{{ 'bold' if today['fish'] < today['chicken']}}">Fish: {{ today['fish'] | safe }}</p>
+                        <p class="{{ 'bold' if today['chicken'] < today['fish']}}">Chicken – {{ today['chicken'] | safe }}</p>
+                        <p class="{{ 'bold' if today['fish'] < today['chicken']}}">Fish – {{ today['fish'] | safe }}</p>
                     </div>
                 </div>
                 <div class="today--portions">
