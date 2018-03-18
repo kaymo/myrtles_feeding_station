@@ -1,20 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
     <div id="main">
-        <h1>Myrtle Wants Food</h1>
         <div class="columns">
             <div class="today">
                 <h2>Today</h2>
                 <div class="today--flavour-breakdown">
-                    <div class="today--flavour">
-                        <h3>Total</h3>
-                        <p>Chicken</p>
-                        <p>Fish</p>
-                    </div>
-                    <div class="today--quantity">
-                        <h3>{{ today['total'] | safe }}</h3>
-                        <p>{{ today['chicken'] | safe }}</p>
-                        <p>{{ today['fish'] | safe }}</p>
+                    <h3>Total: {{ today['total'] | safe }}</h3>
+                    <div class="columns">
+                        <p class="{{ 'bold' if today['chicken'] < today['fish']}}">Chicken: {{ today['chicken'] | safe }}</p>
+                        <p class="{{ 'bold' if today['fish'] < today['chicken']}}">Fish: {{ today['fish'] | safe }}</p>
                     </div>
                 </div>
                 <div class="today--portions">
@@ -39,6 +33,7 @@
                 </form>
             </div>
             <div class="now">
+                <h1>Myrtle Wants Food</h1>
                 <h2>Now</h2>
                 <form action="/food-portions" method="post">
                     <div class="now--flavour">

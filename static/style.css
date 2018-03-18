@@ -22,6 +22,7 @@ h1 {
 h2 {
     font-size: 1.8rem; 
     text-transform: uppercase;
+    margin-bottom: 0;
 }
 
 .columns {
@@ -35,22 +36,24 @@ h2 {
     width: 40%;
     color: rgb(67, 86, 78);
     background-color: rgba(67, 86, 78, 0.2);
-    padding: 2rem 0;
 }
 
-.now {
-    width: 20rem;
-    width: 55%;
-    padding: 2rem 0;
-    color: rgb(67, 86, 78);
+.bold {
+    font-weight: bold;
 }
 
 .today--flavour-breakdown {
-    width: 8rem;
-    display: flex;
-    text-align: left;
-    justify-content: space-between;
+    width: 100%;
+    text-align: center;
     padding-bottom: 1rem;
+}
+
+.today--flavour-breakdown .columns { 
+    justify-content: space-evenly;
+}
+
+.today--flavour-breakdown .columns p {
+    margin: 0;
 }
 
 .today--portions {
@@ -62,8 +65,19 @@ h2 {
     line-height: 0.85rem;
 }
 
-.now--flavour, .now--quantity {
-  margin-bottom: 0.5rem;
+.now {
+    width: 20rem;
+    width: 55%;
+    color: rgb(67, 86, 78);
+}
+
+.now--flavour {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.now--quantity {
+    margin-bottom: 0.5rem;
 }
 
 input {
@@ -91,12 +105,12 @@ input:checked+label {
 }
 
 button {
+    margin: 1rem 0;
     padding: 1rem;
     border-radius: 2px;
     font-size: 0.9rem;
     border: 0;
     outline: none;
-    margin-top: 1.5rem;
     color: white;
     background-color: rgba(67, 86, 78, 0.9);
 }
