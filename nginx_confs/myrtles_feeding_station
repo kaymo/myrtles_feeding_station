@@ -1,0 +1,8 @@
+server {
+    listen *:5003;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/pi/myrtles_feeding_station/myrtles_feeding_station.sock;
+    }
+}
