@@ -20,6 +20,7 @@ h1 {
 
 h2 {
     font-size: 1.8rem; 
+    text-transform: uppercase;
 }
 
 .columns {

@@ -42,8 +42,8 @@
                 <h2>Now</h2>
                 <form action="/food-portions" method="post">
                     <div class="now--flavour">
-                        <input type="radio" name="flavour" value="chicken" id="flavour-chicken" /><label for="flavour-chicken">Chicken</label>
-                        <input type="radio" name="flavour" value="fish" id="flavour-fish" /><label for="flavour-fish">Fish</label>
+                        <input type="radio" name="flavour" value="Chicken" id="flavour-chicken" /><label for="flavour-chicken">Chicken</label>
+                        <input type="radio" name="flavour" value="Fish" id="flavour-fish" /><label for="flavour-fish">Fish</label>
                     </div>
                     <div class="now--quantity">
                         <input type="radio" name="quantity" value="1" id="quantity-1" /><label for="quantity-1">&frac13;</label>
@@ -51,7 +51,13 @@
                         <input type="radio" name="quantity" value="3" id="quantity-3" /><label for="quantity-3">1</label>
                         <input type="radio" name="quantity" value="6" id="quantity-6" /><label for="quantity-6">2</label>
                     </div>
-                    <button>I'm Feeding Myrtle!</button>
+                    <button>
+                        {% if limit_reached %}
+                          I'm a Traitor ...
+                        {% else %}
+                          I'm Feeding Myrtle!
+                        {% endif %}
+                    </button>
                 </form>
             </div>
         </div>
