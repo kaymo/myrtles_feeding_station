@@ -2,8 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect
 import sqlite3, datetime
 
 
-app = Flask(__name__)
-#app.config['DEBUG'] = False
+application = Flask(__name__)
+application.config['DEBUG'] = False
 
 # E.g., display 4 as "1 1/3"
 def get_scoop_display(quantity):
@@ -39,7 +39,7 @@ def get_day_start():
     return str(start_of_day_three_hours_ago + timespan_three_hours)
 
 
-@app.route('/')
+@application.route('/')
 def index():
     portions = []
     today = { 'chicken': 0, 'fish': 0, 'total': 0 }
@@ -91,7 +91,7 @@ def index():
     return render_template('main.html', portions=portions, today=today_display, limit_reached = today['total']/3 >= 6)
     
 
-@app.route('/food-portions', methods=['POST'])
+@application.route('/food-portions', methods=['POST'])
 def food_portions():
     # Grab the form data
     quantity = int(request.form['quantity'])
@@ -120,7 +120,7 @@ def food_portions():
     return redirect(url_for('index'))
     
 
-@app.route('/undo', methods=['POST'])
+@application.route('/undo', methods=['POST'])
 def undo():
     # Connect to database
     con = None
@@ -146,4 +146,6 @@ def undo():
 
     
 if __name__ == '__main__':
-    app.run()
+    application.run()
+
+# EOF
