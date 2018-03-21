@@ -153,7 +153,7 @@ def undo():
         cur = con.cursor()
         
         # Remove last DB entry
-        query = "DELETE FROM myrtle WHERE time > datetime('" + get_day_start() + "')" ORDER BY time DESC LIMIT 1"
+        query = "DELETE FROM myrtle WHERE time > datetime('" + get_day_start() + "') ORDER BY time DESC LIMIT 1"
         cur.execute(query)
         con.commit()
         
