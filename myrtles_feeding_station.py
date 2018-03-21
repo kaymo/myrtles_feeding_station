@@ -28,7 +28,7 @@ def get_scoop_display(quantity):
     if remainder == 0:
         return displayed_whole
     
-    return str(whole) + displayed_remainder
+    return displayed_whole + displayed_remainder
     
 # Get previous 3am
 def get_day_start():
@@ -43,6 +43,7 @@ def get_day_start():
 def index():
     portions = []
     today = { 'chicken': 0, 'fish': 0, 'total': 0 }
+    next_flavour = 'Fish'
         
     con = None
     try: 
@@ -56,7 +57,6 @@ def index():
         rows = cur.fetchall()
 
         # Form the data that will passed to the JS and HTML
-        portions = []
         for row in rows:
         
             # Compile today's food
@@ -74,10 +74,34 @@ def index():
             # Sum quantities and breakdown by flavour
             today['total'] += row[1]
             if row[2] == 'Fish':
-                 today['fish'] += row[1]
+                today['fish'] += row[1]
             elif row[2] == 'Chicken':
-                 today['chicken'] += row[1]
+                today['chicken'] += row[1]
         
+        # Decide which flavour should be next
+        if today['total'] == 0:
+    
+            # First scoop of the day so choose whichever flavour wasn't last fed
+            query = "SELECT flavour FROM myrtle ORDER BY time DESC LIMIT 1"
+            cur.execute(query)
+            previous = cur.fetchone()
+            
+            if previous is not None and previous[0] == 'Fish':
+                next_flavour = 'Chicken'
+            else:
+                next_flavour = 'Fish'
+        else:
+            # Alternate every 2 scoops
+            first_flavour = rows[0][2]
+            second_flavour = 'Fish' if first_flavour == 'Chicken' else 'Chicken'
+            
+            # Quantities are in 1/3-scoop units; alternate every 6 units
+            if today['total'] % 12 < 6:
+                next_flavour = first_flavour
+            else:
+                next_flavour = second_flavour
+                
+        # Display quantities as scoop fractions
         today_display = { 'chicken': get_scoop_display(today['chicken']), 'fish': get_scoop_display(today['fish']), 'total': get_scoop_display(today['total']) }
 
     except sqlite3.Error, e:
@@ -88,7 +112,7 @@ def index():
         if con:
             con.close()
     
-    return render_template('main.html', portions=portions, today=today_display, limit_reached = today['total']/3 >= 6)
+    return render_template('main.html', portions=portions, today=today_display, limit_reached = today['total']/3 >= 6, next_flavour=next_flavour)
     
 
 @application.route('/food-portions', methods=['POST'])
@@ -129,7 +153,7 @@ def undo():
         cur = con.cursor()
         
         # Remove last DB entry
-        query = 'DELETE FROM myrtle ORDER BY time DESC LIMIT 1'
+        query = "DELETE FROM myrtle WHERE time > datetime('" + get_day_start() + "')" ORDER BY time DESC LIMIT 1"
         cur.execute(query)
         con.commit()
         

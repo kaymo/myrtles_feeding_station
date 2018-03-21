@@ -31,6 +31,10 @@ h2 {
     display: flex;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .today {
     display: -webkit-flex;
     display: flex;
@@ -41,23 +45,21 @@ h2 {
     background-color: rgba(67, 86, 78, 0.2);
 }
 
-.bold {
-    font-weight: bold;
-}
-
 .today--flavour-breakdown {
     width: 100%;
     text-align: center;
-    padding-bottom: 1rem;
+    width: 18rem;
+    padding-bottom: 0.5rem;
 }
 
 .today--flavour-breakdown .columns { 
-    justify-content: center;
-    -webkit-justify-content: center;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    line-height: 0.5rem;
 }
 
-.today--flavour-breakdown .columns p {
-    margin: 0 1.5rem;
+.today--flavour-breakdown .columns p { 
+    width: 5rem;
 }
 
 .today--portions {
@@ -127,6 +129,8 @@ button {
     background-color: rgba(67, 86, 78, 0.9);
 }
 button:active {
-    outline: none;
     background-color: rgba(67, 86, 78, 1);
+}
+button:disabled {
+    opacity: 0.3;
 }

@@ -5,10 +5,19 @@
             <div class="today">
                 <h2>Today</h2>
                 <div class="today--flavour-breakdown">
-                    <h3>Total – {{ today['total'] | safe }}</h3>
                     <div class="columns">
-                        <p class="{{ 'bold' if today['chicken'] < today['fish']}}">Chicken – {{ today['chicken'] | safe }}</p>
-                        <p class="{{ 'bold' if today['fish'] < today['chicken']}}">Fish – {{ today['fish'] | safe }}</p>
+                        <div>
+                            <p>Chicken</p>
+                            <p>{{ today['chicken'] | safe }}</p>
+                        </div>
+                        <div>
+                            <p class="bold">Total</p>
+                            <p class="bold">{{ today['total'] | safe }}</p>
+                        </div>
+                        <div>
+                            <p>Fish</p>
+                            <p>{{ today['fish'] | safe }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="today--portions">
@@ -29,7 +38,7 @@
                     </div>
                 </div>
                 <form action="/undo" method="post">
-                    <button>Undo</button>
+                    <button {{"disabled" if today['total'] == '0'}}>Undo</button>
                 </form>
             </div>
             <div class="now">
@@ -37,8 +46,8 @@
                 <h2>Now</h2>
                 <form action="/food-portions" method="post">
                     <div class="now--flavour">
-                        <input type="radio" name="flavour" value="Chicken" id="flavour-chicken" /><label for="flavour-chicken">Chicken</label>
-                        <input type="radio" name="flavour" value="Fish" id="flavour-fish" /><label for="flavour-fish">Fish</label>
+                        <input type="radio" name="flavour" value="Chicken" id="flavour-chicken" {{'checked' if next_flavour == 'Chicken'}}/><label for="flavour-chicken">Chicken</label>
+                        <input type="radio" name="flavour" value="Fish" id="flavour-fish" {{'checked' if next_flavour == 'Fish'}}/><label for="flavour-fish">Fish</label>
                     </div>
                     <div class="now--quantity">
                         <input type="radio" name="quantity" value="1" id="quantity-1" /><label for="quantity-1">&frac13;</label>
