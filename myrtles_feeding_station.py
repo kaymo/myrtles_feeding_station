@@ -122,8 +122,9 @@ def index():
         today_rows = cur.fetchall()
 
         # Form the time series for the x-axis buckets
-        current = datetime.datetime(2000, 1, 1, 6, 0, 0)
-        last = datetime.datetime(2000, 1, 2, 0, 0, 0)
+        now = datetime.datetime.now()
+        current = datetime.datetime(2000, 1, 1, 6)
+        last = datetime.datetime(2000, 1, 2)
         delta = datetime.timedelta(minutes=15)
         times = []
         while current < last:
@@ -140,9 +141,10 @@ def index():
             
             # [x,y] data pair where x is the time of day and y is the amount of food
             history_datum.append( "[Date.parse('{}'),{}]".format(time, float(history_total) / float(n * 3)) )
-            today_datum.append(   "[Date.parse('{}'),{}]".format(time, float(today_total)   / float(3)) )
             
-
+            if len(today_rows) and (time - delta) <= datetime.datetime(2000, 1, 1, now.hour, now.minute):
+                today_datum.append("[Date.parse('{}'),{}]".format(time, float(today_total) / float(3)) )
+            
         history_data = "[" +','.join(history_datum)+ "]"
         today_data = "[" +','.join(today_datum)+ "]"
         
