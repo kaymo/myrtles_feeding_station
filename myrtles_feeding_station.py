@@ -139,7 +139,7 @@ def index():
             today_total   = sum([row[1] for row in today_rows   if row[0] < time.strftime('%H:%M')])
             
             # [x,y] data pair where x is the time of day and y is the amount of food
-            history_datum.append( "[Date.parse('{}'),{}]".format(time, float(history_total) / float(n * 3)) )
+            history_datum.append( "[Date.parse('{}'),{}]".format(time, float(history_total) / float((n + 1) * 3)) )
             today_datum.append(   "[Date.parse('{}'),{}]".format(time, float(today_total)   / float(3)) )
             
 
