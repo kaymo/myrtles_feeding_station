@@ -31,11 +31,15 @@ def get_scoop_display(quantity):
     return displayed_whole + displayed_remainder
     
 # Get previous 3am
-def get_day_start():
+def get_day_start(days_ago=0):
     now = datetime.datetime.now()
     timespan_three_hours = datetime.timedelta(hours=3)
     three_hours_ago = now - timespan_three_hours
     start_of_day_three_hours_ago = three_hours_ago.replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    timespan_days_ago = datetime.timedelta(days=days_ago)
+    start_of_day_three_hours_ago -= timespan_days_ago
+    
     return str(start_of_day_three_hours_ago + timespan_three_hours)
 
 
@@ -51,12 +55,13 @@ def index():
         con = sqlite3.connect('myrtle.db')
         cur = con.cursor()
         
+        # TODAY'S PORTIONS DATA
+        
         # Get all entries since 3am
         query = "SELECT strftime('%H:%M',time), quantity, flavour FROM myrtle WHERE time > datetime('" + get_day_start() + "')"
         cur.execute(query)
         rows = cur.fetchall()
 
-        # Form the data that will passed to the JS and HTML
         for row in rows:
         
             # Compile today's food
@@ -78,7 +83,8 @@ def index():
             elif row[2] == 'Chicken':
                 today['chicken'] += row[1]
         
-        # Decide which flavour should be next
+        # NEXT FLAVOUR
+        
         if today['total'] == 0:
     
             # First scoop of the day so choose whichever flavour wasn't last fed
@@ -104,6 +110,42 @@ def index():
         # Display quantities as scoop fractions
         today_display = { 'chicken': get_scoop_display(today['chicken']), 'fish': get_scoop_display(today['fish']), 'total': get_scoop_display(today['total']) }
 
+        # CHART DATA
+        
+        # Get all entries in the past n days
+        n = 5
+        cur.execute("SELECT strftime('%H:%M',time), quantity FROM myrtle WHERE time > datetime('" + get_day_start(n) + "')")
+        history_rows = cur.fetchall()
+        
+        # Get all entries today
+        cur.execute("SELECT strftime('%H:%M',time), quantity FROM myrtle WHERE time > datetime('" + get_day_start() + "')")
+        today_rows = cur.fetchall()
+
+        # Form the time series for the x-axis buckets
+        current = datetime.datetime(2000, 1, 1, 6, 0, 0)
+        last = datetime.datetime(2000, 1, 2, 0, 0, 0)
+        delta = datetime.timedelta(minutes=15)
+        times = []
+        while current < last:
+            times.append(current)
+            current += delta
+            
+        history_datum = []
+        today_datum = []
+        for time in times:
+            
+            # For each time, sum the units fed before the time
+            history_total = sum([row[1] for row in history_rows if row[0] < time.strftime('%H:%M')])
+            today_total   = sum([row[1] for row in today_rows   if row[0] < time.strftime('%H:%M')])
+            
+            # [x,y] data pair where x is the time of day and y is the amount of food
+            history_datum.append( "[Date.parse('{}'),{}]".format(time, float(history_total) / float(n * 3)) )
+            today_datum.append(   "[Date.parse('{}'),{}]".format(time, float(today_total)   / float(3)) )
+            
+
+        history_data = "[" +','.join(history_datum)+ "]"
+        today_data = "[" +','.join(today_datum)+ "]"
+        
     except sqlite3.Error, e:
         print "Error: {}".format(e.args[0])
 
@@ -112,7 +154,7 @@ def index():
         if con:
             con.close()
     
-    return render_template('main.html', portions=portions, today=today_display, limit_reached = today['total']/3 >= 6, next_flavour=next_flavour)
+    return render_template('chart.html', portions=portions, today=today_display, limit_reached = today['total']/3 >= 6, next_flavour=next_flavour, history_data=history_data, today_data=today_data)
     
 
 @application.route('/food-portions', methods=['POST'])

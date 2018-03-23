@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% block chart %}
+  <div id="chart"></div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script>
+  $(function () { 
+    $('#chart').highcharts({
+        chart: {
+            type: 'line',
+            zoomType: 'x',
+            spacingTop: 0,
+            backgroundColor: '#f5f6f6',
+            height: 300
+        },
+        title: {
+            text: ''
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        tooltip : {
+            formatter: function() {
+                var time = new Date(this.x);
+                var hours = time.getHours();
+                var minutes = time.getMinutes() == 0 ? "00" : time.getMinutes();
+                return "<b>" + hours + ":" + minutes + ' - ' + this.series.name + '</b><br/>' + this.y.toFixed(2) + ' scoops';
+            }
+        },  
+        xAxis: {
+            minorTickInterval: 0,
+            minorTickPosition: '',
+            type:'linear',
+            labels: {
+                step: 1,
+                rotation: 270
+            },
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                hour: '%H:%M',
+                day: '%H:%M'
+            },
+            min: Date.parse('2000-01-01 06:00:00'),
+            max: Date.parse('2000-01-02 00:00:00'),
+            tickInterval: 1000 * 60 * 60 
+        },
+        yAxis: {
+            visible: false
+        },
+        series: [{
+            name:'Average',
+            data: {{history_data|safe}},
+            color: "#b4bbb8",
+            dashStyle: "longDash"
+        }, {
+            name:"Today",
+            data: {{today_data|safe}},
+            color: "#43564e"
+        }]
+    });
+  });
+  </script>
+{% endblock %}

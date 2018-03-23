@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
-{% block body %}
+{% block main %}
     <div id="main">
         <div class="columns">
             <div class="today">
+                <h1>Myrtle Wants Food</h1>
                 <h2>Today</h2>
                 <div class="today--flavour-breakdown">
                     <div class="columns">
@@ -42,7 +43,6 @@
                 </form>
             </div>
             <div class="now">
-                <h1>Myrtle Wants Food</h1>
                 <h2>Now</h2>
                 <form action="/food-portions" method="post">
                     <div class="now--flavour">
@@ -63,6 +63,7 @@
                         {% endif %}
                     </button>
                 </form>
+                {% block chart %}{% endblock %}
             </div>
         </div>
     </div>
