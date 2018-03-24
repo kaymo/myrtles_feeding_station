@@ -140,10 +140,10 @@ def index():
             today_total   = sum([row[1] for row in today_rows   if row[0] < time.strftime('%H:%M')])
             
             # [x,y] data pair where x is the time of day and y is the amount of food
-            history_datum.append( "[Date.parse('{}'),{}]".format(time, float(history_total) / float(n * 3)) )
+            history_datum.append( "[Date.UTC(2000, 1, 1, {}, {}),{}]".format(time.hour, time.minute, float(history_total) / float(n * 3)) )
             
             if len(today_rows) and (time - delta) <= datetime.datetime(2000, 1, 1, now.hour, now.minute):
-                today_datum.append("[Date.parse('{}'),{}]".format(time, float(today_total) / float(3)) )
+                today_datum.append("[Date.UTC(2000, 1, 1, {}, {}),{}]".format(time.hour, time.minute, float(today_total) / float(3)) )
             
         history_data = "[" +','.join(history_datum)+ "]"
         today_data = "[" +','.join(today_datum)+ "]"
