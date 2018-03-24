@@ -121,6 +121,7 @@ input:checked+label {
 
 .highcharts-credits {
     opacity: 0;
+    visibility: hidden;
 }
 
 button {
