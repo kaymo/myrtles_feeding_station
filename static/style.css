@@ -120,7 +120,7 @@ input:checked+label {
 }
 
 .highcharts-credits {
-    display: none;
+    opacity: 0;
 }
 
 button {
