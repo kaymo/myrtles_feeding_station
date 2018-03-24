@@ -120,7 +120,8 @@ input:checked+label {
 }
 
 .highcharts-credits {
-    opacity: 0;
+    position: absolute;
+    top: -999px;
 }
 
 button {
