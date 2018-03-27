@@ -135,9 +135,9 @@ def index():
         today_datum = []
         for time in times:
             
-            # For each time, sum the units fed before the time
-            history_total = sum([row[1] for row in history_rows if row[0] < time.strftime('%H:%M')])
-            today_total   = sum([row[1] for row in today_rows   if row[0] < time.strftime('%H:%M')])
+            # For each time, sum the units fed before the time (ignore any between midnight and 3am)
+            history_total = sum([row[1] for row in history_rows if "03:00" < row[0] and row[0] < time.strftime('%H:%M')])
+            today_total   = sum([row[1] for row in today_rows   if "03:00" < row[0] and row[0] < time.strftime('%H:%M')])
             
             # [x,y] data pair where x is the time of day and y is the amount of food
             history_datum.append( "[Date.UTC(2000, 1, 1, {}, {}),{}]".format(time.hour, time.minute, float(history_total) / float(n * 3)) )
