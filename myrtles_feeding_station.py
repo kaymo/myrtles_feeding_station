@@ -113,7 +113,7 @@ def index():
         # CHART DATA
         
         # Get all entries in the past n days
-        n = 5
+        n = 10
         cur.execute("SELECT strftime('%H:%M',time), quantity FROM myrtle WHERE time BETWEEN datetime('" + get_day_start(n) + "') AND datetime('" + get_day_start() + "') ")
         history_rows = cur.fetchall()
         
