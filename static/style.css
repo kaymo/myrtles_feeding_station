@@ -24,7 +24,7 @@ h1 {
 h2 {
     font-size: 1.8rem; 
     text-transform: uppercase;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
 }
 
 .columns {
@@ -36,7 +36,13 @@ h2 {
     font-weight: bold;
 }
 
-.today {
+.hidden {
+    opacity: 0;
+    display: none;
+    height: 0;
+}
+
+.left {
     display: -webkit-flex;
     display: flex;
     flex-direction: column;
@@ -46,37 +52,50 @@ h2 {
     background-color: rgba(67, 86, 78, 0.2);
 }
 
-.today--flavour-breakdown {
-    width: 100%;
-    text-align: center;
-    width: 18rem;
-    padding-bottom: 0.5rem;
+.right {
+    width: 20rem;
+    width: 60%;
+    color: rgb(67, 86, 78);
 }
 
-.today--flavour-breakdown .columns { 
+.right .columns {
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+}
+
+.today--flavour-breakdown {
+    width: 8rem;
+    padding-bottom: 0.5rem;
+    text-align: right;
+}
+
+.today--flavour-breakdown div { 
     justify-content: space-between;
     -webkit-justify-content: space-between;
-    line-height: 0.5rem;
+    line-height: 0.6rem;
 }
 
-.today--flavour-breakdown .columns p { 
-    width: 5rem;
+.today--flavour-breakdown div p { 
+    width: 4rem;
+}
+
+.today--flavour-breakdown .total {
+    padding-bottom: 1rem;
 }
 
 .today--portions {
-    width: 8rem;
-    display: flex;
-    text-align: left;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    line-height: 0.85rem;
+    width: 10rem;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 0.6rem;
 }
 
-.now {
-    width: 20rem;
-    width: 55%;
-    color: rgb(67, 86, 78);
+.today--portions .columns {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    text-align: right;
 }
 
 .now--flavour {
@@ -97,17 +116,15 @@ label {
     padding: 1rem;
     border-radius: 2px;
     font-size: 1.1rem;
-    border: 2px solid rgba(67, 86, 78, 0.1);
+    background-color: white;
 }
 
 label:hover {
-    border: 2px solid rgba(67, 86, 78, 0.01);
     background-color: rgba(67, 86, 78, 0.1);
 }
 
 input:checked+label {
     color: rgb(67, 86, 78);
-    border: 2px solid rgba(67, 86, 78, 0.02);
     background-color: rgba(67, 86, 78, 0.2);
 }
 
@@ -124,11 +141,12 @@ input:checked+label {
     visibility: hidden;
 }
 
+#chart {
+    margin-bottom: 1rem;
+}
+
 button {
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 2px;
-    font-size: 0.9rem;
+    border-radius: 3px;
     border: 0;
     outline: none;
     color: white;
@@ -139,4 +157,16 @@ button:active {
 }
 button:disabled {
     opacity: 0.3;
+}
+
+.now button {
+    margin: 1rem 0;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+.today button {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    margin-bottom: 0.5rem;
 }

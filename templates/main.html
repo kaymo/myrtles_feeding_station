@@ -2,47 +2,8 @@
 {% block main %}
     <div id="main">
         <div class="columns">
-            <div class="today">
+            <div class="left now">
                 <h1>Myrtle Wants Food</h1>
-                <h2>Today</h2>
-                <div class="today--flavour-breakdown">
-                    <div class="columns">
-                        <div>
-                            <p>Chicken</p>
-                            <p>{{ today['chicken'] | safe }}</p>
-                        </div>
-                        <div>
-                            <p class="bold">Total</p>
-                            <p class="bold">{{ today['total'] | safe }}</p>
-                        </div>
-                        <div>
-                            <p>Fish</p>
-                            <p>{{ today['fish'] | safe }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="today--portions">
-                    <div class="today--portions-time">
-                        {% for portion in portions %}
-                          <p>{{ portion['time'] }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="today--portions-flavour">
-                        {% for portion in portions %}
-                          <p>{{ portion['flavour'] }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="today--portions-quantity">
-                        {% for portion in portions %}
-                          <p>{{ portion['quantity'] | safe }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <form action="/undo" method="post">
-                    <button {{"disabled" if today['total'] == '0'}}>Undo</button>
-                </form>
-            </div>
-            <div class="now">
                 <h2>Now</h2>
                 <form action="/food-portions" method="post">
                     <div class="now--flavour">
@@ -63,6 +24,45 @@
                         {% endif %}
                     </button>
                 </form>
+            </div>
+            <div class="right today">
+                <h2>Today</h2>
+                <div class="columns">
+                    <div class="today--flavour-breakdown columns">
+                        <div>
+                            <p class="total bold">Total</p>
+                            <p>Chicken</p>
+                            <p>Fish</p>
+                        </div>
+                        <div>
+                            <p class="total bold">{{ today['total'] | safe }}</p>
+                            <p>{{ today['chicken'] | safe }}</p>
+                            <p>{{ today['fish'] | safe }}</p>
+                        </div>
+                    </div>
+                    <div class="today--portions">
+                        <div class="columns">
+                            <div class="today--portions-time">
+                                {% for portion in portions %}
+                                  <p class="bold">{{ portion['time'] }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="today--portions-flavour">
+                                {% for portion in portions %}
+                                  <p>{{ portion['flavour'] }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="today--portions-quantity">
+                                {% for portion in portions %}
+                                  <p>{{ portion['quantity'] | safe }}</p>
+                                {% endfor %}
+                            </div>
+                            <form action="/undo" method="post">
+                                <button {{'class=hidden' if today['total'] == '0'}}>&#215;</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 {% block chart %}{% endblock %}
             </div>
         </div>
